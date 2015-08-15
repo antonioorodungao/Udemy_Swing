@@ -5,6 +5,14 @@ package model;
  */
 public enum Gender {
     Male,
-    Female
+    Female;
+
+    public String toString(){
+        if(Male.equals("Male")){
+            return "Male";
+        }else{
+            return "Female";
+        }
+    }
 
 }

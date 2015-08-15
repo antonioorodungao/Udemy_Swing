@@ -1,6 +1,9 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +18,8 @@ public class MainFrame extends JFrame{
     private ToolBar toolBar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
+    private TablePanel tablePanel;
+    private Controller controller;
 
 
     public MainFrame(){
@@ -23,6 +28,8 @@ public class MainFrame extends JFrame{
 
         textPanel = new TextPanel();
         formPanel = new FormPanel();
+        tablePanel = new TablePanel();
+        controller = new Controller();
 
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -30,20 +37,16 @@ public class MainFrame extends JFrame{
         setJMenuBar(createMenuBar());
 
         add(formPanel, BorderLayout.WEST);
-        add(textPanel, BorderLayout.CENTER);
+      //  add(textPanel, BorderLayout.CENTER);
+        add(tablePanel, BorderLayout.CENTER);
+
+        tablePanel.setData(controller.getPeople());
 
         formPanel.setFormListener(new FormListener() {
             @Override
             public void FormEventOccurred(FormEvent e) {
-                String name = e.getName();
-                String occupation = e.getOccupation();
-                AgeCategory agecat = e.getAgecat();
-                String empCat = e.getEmpcat();
-                boolean isUSCitizen = e.isUsCitizen();
-                String taxID = e.getTaxID();
-                String gender = e.getGender();
-                textPanel.appendText(name + " " + occupation + " " + agecat.getId() + " " +
-                        empCat +  " " + isUSCitizen + " " + taxID +  " " + gender + "\n");
+                controller.addPerson(e);
+                tablePanel.refresh();
             }
         });
 

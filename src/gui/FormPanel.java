@@ -54,7 +54,7 @@ public class FormPanel extends JPanel{
 
         genderGroup.add(maleRadio);
         genderGroup.add(femaleRadio);
-
+        genderGroup.setSelected(maleRadio.getModel(), true);
 //      List box
         DefaultListModel dm = new DefaultListModel();
         dm.addElement(new AgeCategory(0,"Under 18"));
@@ -183,7 +183,7 @@ public class FormPanel extends JPanel{
                 int selectedAgeCat = ((AgeCategory)ageList.getSelectedValue()).getId();
                 String name = nameField.getText();
                 String occupation = occupationField.getText();
-                String empcat = (String) empCombo.getSelectedItem();
+                int empcat =  empCombo.getSelectedIndex();
                 boolean usCitizen = citizenCheck.isSelected();
                 String taxId = taxField.getText();
                 String gender = genderGroup.getSelection().getActionCommand();

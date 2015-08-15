@@ -83,4 +83,12 @@ public class Person {
     public void setGender(Gender gender) {
         this.gender = gender;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
