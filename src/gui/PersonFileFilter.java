@@ -13,6 +13,7 @@ public class PersonFileFilter extends FileFilter {
         if(f.isDirectory()){
             return true;
         }
+
         String name = f.getName();
         if("per".equals(Utils.getFileExtension(name))){
             return true;

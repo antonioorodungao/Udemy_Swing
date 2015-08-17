@@ -15,7 +15,7 @@ public class Utils {
             return null;
         }
 
-        return name.substring(pointIndex, name.length());
+        return name.substring(pointIndex+1, name.length());
 
 
     }

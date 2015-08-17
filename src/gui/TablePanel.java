@@ -5,6 +5,10 @@ import model.PersonTableModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 /**
@@ -14,11 +18,42 @@ public class TablePanel extends JPanel {
 
     private JTable table;
     private PersonTableModel tableModel;
+    private JPopupMenu popup;
+    private PersonTableListener tableListener;
 
     public TablePanel(){
 
         tableModel = new PersonTableModel();
         table = new JTable(tableModel);
+
+        popup = new JPopupMenu();
+        JMenuItem removeItem = new JMenuItem("Delete");
+        popup.add(removeItem);
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+
+            public void mouseClicked(MouseEvent e) {
+                int row = table.rowAtPoint(e.getPoint());
+//                System.out.println(row);
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    popup.show(table, e.getX(), e.getY());
+                }
+            }
+        });
+
+        removeItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = table.getSelectedRow();
+                if(tableListener != null){
+                    tableListener.personDeleted(row);
+                    tableModel.fireTableRowsDeleted(row, row);
+                }
+
+            }
+        });
+
         setLayout(new BorderLayout());
         add(new JScrollPane(table), BorderLayout.CENTER);
     }
@@ -29,6 +64,10 @@ public class TablePanel extends JPanel {
 
     public void refresh(){
         tableModel.fireTableDataChanged();
+    }
+
+    public void addPersonListener(PersonTableListener listener){
+        tableListener = listener;
     }
 
 

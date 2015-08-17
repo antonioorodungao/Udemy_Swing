@@ -1,6 +1,9 @@
 package gui;
 
+import com.sun.javafx.scene.control.Keystroke;
 import controller.Controller;
+import sun.security.jgss.krb5.Krb5Util;
+import sun.security.krb5.internal.ktab.KeyTabInputStream;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -8,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 /**
  * Created by Oro on 8/4/2015.
@@ -42,6 +46,13 @@ public class MainFrame extends JFrame{
 
         tablePanel.setData(controller.getPeople());
 
+        tablePanel.addPersonListener(new PersonTableListener(){
+            public void personDeleted(int row){
+                System.out.println(row);
+                controller.deletePerson(row);
+            }
+        });
+
         formPanel.setFormListener(new FormListener() {
             @Override
             public void FormEventOccurred(FormEvent e) {
@@ -64,7 +75,9 @@ public class MainFrame extends JFrame{
         JMenu windowMenu = new JMenu("Window");
 
         JMenuItem importMenuItem = new JMenuItem("Import Data...");
+        importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
         JMenuItem exportMenuItem = new JMenuItem("Export Data...");
+        exportMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
         JMenuItem exit = new JMenuItem("Exit");
         exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,ActionEvent.CTRL_MASK));
         exit.setMnemonic(KeyEvent.VK_X);
@@ -89,6 +102,13 @@ public class MainFrame extends JFrame{
                 int option = fileChooser.showOpenDialog(MainFrame.this);
                 if(option == JFileChooser.APPROVE_OPTION){
                     System.out.println(fileChooser.getSelectedFile());
+                    try {
+                        controller.loadFromFile(fileChooser.getSelectedFile());
+                        tablePanel.refresh();
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(MainFrame.this, "Could not load data from file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
             }
         });
@@ -99,6 +119,12 @@ public class MainFrame extends JFrame{
                 int option = fileChooser.showSaveDialog(MainFrame.this);
                 if(option == JFileChooser.APPROVE_OPTION){
                     System.out.println(fileChooser.getSelectedFile());
+                    try {
+                        controller.saveToFile(fileChooser.getSelectedFile());
+                        tablePanel.refresh();
+                    } catch (IOException e1) {
+                        JOptionPane.showMessageDialog(MainFrame.this, "Could not save to file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
