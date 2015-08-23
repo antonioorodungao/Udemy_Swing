@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 /**
  * Created by Oro on 8/4/2015.
@@ -24,6 +25,8 @@ public class MainFrame extends JFrame{
     private JFileChooser fileChooser;
     private TablePanel tablePanel;
     private Controller controller;
+    private PrefsDialog preference;
+    private Preferences prefs;
 
 
     public MainFrame(){
@@ -34,6 +37,8 @@ public class MainFrame extends JFrame{
         formPanel = new FormPanel();
         tablePanel = new TablePanel();
         controller = new Controller();
+        preference = new PrefsDialog(this);
+
 
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -46,8 +51,8 @@ public class MainFrame extends JFrame{
 
         tablePanel.setData(controller.getPeople());
 
-        tablePanel.addPersonListener(new PersonTableListener(){
-            public void personDeleted(int row){
+        tablePanel.addPersonListener(new PersonTableListener() {
+            public void personDeleted(int row) {
                 System.out.println(row);
                 controller.deletePerson(row);
             }
@@ -60,6 +65,20 @@ public class MainFrame extends JFrame{
                 tablePanel.refresh();
             }
         });
+
+        prefs = Preferences.userRoot().node("db");
+
+        preference.addPreferenceListener(new PreferenceListener(){
+            public void preferenceSet(String name, String password, int port){
+                System.out.println();
+
+                prefs.put("username", name);
+                prefs.put("password", password);
+                prefs.put("port", new Integer(port).toString());
+            }
+        });
+
+        preference.setDefaults(prefs.get("username", ""), prefs.get("password", ""), Integer.valueOf(prefs.get("port", "1234")));
 
         setSize(new Dimension(600, 600));
         setMinimumSize(new Dimension(400,400));
@@ -92,6 +111,10 @@ public class MainFrame extends JFrame{
         showFormItem.setSelected(true);
         showMenu.add(showFormItem);
         windowMenu.add(showMenu);
+
+        JMenuItem showPreference = new JMenuItem("Preferences");
+        showPreference.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        windowMenu.add(showPreference);
 
         menuBar.add(fileMenu);
         menuBar.add(windowMenu);
@@ -134,6 +157,13 @@ public class MainFrame extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) e.getSource();
                 formPanel.setVisible(menuItem.isSelected());
+            }
+        });
+
+        showPreference.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                preference.setVisible(true);
             }
         });
 
