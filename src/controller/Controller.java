@@ -5,6 +5,7 @@ import model.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,10 +64,8 @@ public class Controller {
         Gender gender = null;
         if(gen.equals(Gender.Female.toString())){
             gender = Gender.Female;
-//            System.out.println("Gender is Female");
         }else{
             gender = Gender.Male;
-//            System.out.println("Gender is Male");
         }
 
 
@@ -78,6 +77,18 @@ public class Controller {
 
     public void saveToFile(File file) throws IOException {
         db.saveToFile(file);
+
+    }
+
+    public void saveToDB(){
+        try {
+            db.connect();
+            db.savePeopleToDB();
+            db.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void loadFromFile(File file) throws IOException{

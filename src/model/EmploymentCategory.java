@@ -6,5 +6,18 @@ package model;
 public enum EmploymentCategory {
     Unemployed,
     Selfemployed,
-    Employed
+    Employed;
+
+    public static EmploymentCategory valueOf(int i){
+        switch (i){
+            case 0:
+                return Unemployed;
+            case 1:
+                return Selfemployed;
+            case 2:
+                return Employed;
+            default:
+                return Unemployed;
+        }
+    }
 }

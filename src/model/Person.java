@@ -29,6 +29,8 @@ public class Person implements Serializable{
         this.id = count;
         count++;
     }
+    public Person(){
+    }
 
     public String getName() {
         return name;

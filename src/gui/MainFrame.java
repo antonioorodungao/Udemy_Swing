@@ -145,6 +145,7 @@ public class MainFrame extends JFrame{
                     try {
                         controller.saveToFile(fileChooser.getSelectedFile());
                         tablePanel.refresh();
+
                     } catch (IOException e1) {
                         JOptionPane.showMessageDialog(MainFrame.this, "Could not save to file", "Error", JOptionPane.ERROR_MESSAGE);
                     }
@@ -176,7 +177,9 @@ public class MainFrame extends JFrame{
 
                 int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to quit ?" + text , "Exit", JOptionPane.OK_CANCEL_OPTION);
                 if(action  == JOptionPane.OK_OPTION)
+                    controller.saveToDB();
                     System.exit(0);
+
             }
         });
 

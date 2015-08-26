@@ -15,4 +15,15 @@ public enum Gender {
         }
     }
 
+    public static Gender valueOf(int i){
+        switch (i){
+            case 0:
+                return Male;
+            case 1:
+                return Female;
+            default:
+                return Male;
+        }
+    }
+
 }
