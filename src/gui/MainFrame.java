@@ -97,12 +97,16 @@ public class MainFrame extends JFrame{
         importMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
         JMenuItem exportMenuItem = new JMenuItem("Export Data...");
         exportMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+        JMenuItem save = new JMenuItem("Save...");
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
         JMenuItem exit = new JMenuItem("Exit");
         exit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,ActionEvent.CTRL_MASK));
         exit.setMnemonic(KeyEvent.VK_X);
 
         fileMenu.add(importMenuItem);
         fileMenu.add(exportMenuItem);
+        fileMenu.addSeparator();
+        fileMenu.add(save);
         fileMenu.addSeparator();
         fileMenu.add(exit);
 
@@ -150,6 +154,13 @@ public class MainFrame extends JFrame{
                         JOptionPane.showMessageDialog(MainFrame.this, "Could not save to file", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
+            }
+        });
+
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.saveToDB();
             }
         });
 

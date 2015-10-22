@@ -43,6 +43,7 @@ public class Database {
     public void connect() throws SQLException {
         if(conn != null){
             return;
+
         }
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -55,6 +56,7 @@ public class Database {
     public void disconnect() throws SQLException {
         if (conn != null) {
             conn.close();
+            conn=null;
         }
 
     }

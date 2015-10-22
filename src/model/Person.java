@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class Person implements Serializable{
 
-    private static int count = 0;
+    private static int count;
     private int id;
     private String name;
     private String occupation;
@@ -30,6 +30,7 @@ public class Person implements Serializable{
         count++;
     }
     public Person(){
+        count++;
     }
 
     public String getName() {
