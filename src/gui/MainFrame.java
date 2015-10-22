@@ -8,9 +8,7 @@ import sun.security.krb5.internal.ktab.KeyTabInputStream;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 
@@ -80,9 +78,21 @@ public class MainFrame extends JFrame{
 
         preference.setDefaults(prefs.get("username", ""), prefs.get("password", ""), Integer.valueOf(prefs.get("port", "1234")));
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Window Closing...");
+                dispose();
+                System.gc();
+
+                super.windowClosing(e);
+            }
+
+        });
+
         setSize(new Dimension(600, 600));
         setMinimumSize(new Dimension(400,400));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true);
     }
 
@@ -189,7 +199,11 @@ public class MainFrame extends JFrame{
                 int action = JOptionPane.showConfirmDialog(MainFrame.this, "Do you really want to quit ?" + text , "Exit", JOptionPane.OK_CANCEL_OPTION);
                 if(action  == JOptionPane.OK_OPTION)
                     controller.saveToDB();
-                    System.exit(0);
+                    WindowListener[] win = getWindowListeners();
+                    for(WindowListener w: win){
+                        w.windowClosing(new WindowEvent(MainFrame.this,0));
+                    }
+
 
             }
         });
