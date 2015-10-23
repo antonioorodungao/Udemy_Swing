@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+import static gui.Utils.createIcon;
+
 /**
  * Created by Oro on 8/5/2015.
  */
@@ -37,14 +39,6 @@ public class ToolBar extends JToolBar implements ActionListener{
 
     }
 
-    private ImageIcon createIcon(String path){
-        URL url = getClass().getResource(path);
-
-        if(url == null){
-            System.out.println("Unable to load image.");
-        }
-        return new ImageIcon(url);
-    }
 
     public void setToolBarListener(ToolBarListener t){
         this.toolBarListener = t;
