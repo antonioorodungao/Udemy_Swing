@@ -36,6 +36,10 @@ class ServerInfo{
         return isChecked;
     }
 
+    public void setChecked(boolean isChecked){
+        this.isChecked = isChecked;
+    }
+
 
 
 }
@@ -43,12 +47,16 @@ public class MessagePanel extends JPanel {
 
     private JTree serverTree;
     private ServerTreeCellRenderer treeCellRenderer;
+    private ServerTreeCellEditor treeCellEditor;
 
     public MessagePanel() {
 
         treeCellRenderer = new ServerTreeCellRenderer();
+        treeCellEditor = new ServerTreeCellEditor();
         serverTree = new JTree(createTree());
         serverTree.setCellRenderer(treeCellRenderer);
+        serverTree.setCellEditor(treeCellEditor);
+        serverTree.setEditable(true);
 
 
 
