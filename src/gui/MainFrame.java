@@ -36,6 +36,7 @@ public class MainFrame extends JFrame{
         tablePanel = new TablePanel();
         controller = new Controller();
         preference = new PrefsDialog(this);
+        toolBar = new ToolBar();
 
 
         fileChooser = new JFileChooser();
@@ -44,6 +45,7 @@ public class MainFrame extends JFrame{
         setJMenuBar(createMenuBar());
 
         add(formPanel, BorderLayout.WEST);
+        add(toolBar, BorderLayout.NORTH);
       //  add(textPanel, BorderLayout.CENTER);
         add(tablePanel, BorderLayout.CENTER);
 

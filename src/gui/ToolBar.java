@@ -5,29 +5,41 @@ import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 /**
  * Created by Oro on 8/5/2015.
  */
 public class ToolBar extends JPanel implements ActionListener{
 
-    private JButton helloBtn;
-    private JButton goodbyeBtn;
+    private JButton save;
+    private JButton refresh;
     private ToolBarListener toolBarListener;
 
     public ToolBar(){
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
-        helloBtn = new JButton("Hello");
-        goodbyeBtn = new JButton("Goodbye");
+        save = new JButton("Save...");
+        save.setIcon(createIcon("/images/Save24.gif"));
+        refresh = new JButton("Refresh...");
+        refresh.setIcon(createIcon("/images/Refresh24.gif"));
 
-        add(helloBtn);
-        add(goodbyeBtn);
+        add(save);
+        add(refresh);
 
-        helloBtn.addActionListener(this);
-        goodbyeBtn.addActionListener(this);
+        save.addActionListener(this);
+        refresh.addActionListener(this);
 
+    }
+
+    private ImageIcon createIcon(String path){
+        URL url = getClass().getResource(path);
+
+        if(url == null){
+            System.out.println("Unable to load image.");
+        }
+        return new ImageIcon(url);
     }
 
     public void setToolBarListener(ToolBarListener t){
@@ -36,11 +48,11 @@ public class ToolBar extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == helloBtn){
+        if(e.getSource() == save){
             toolBarListener.emitText("Hello");
         }
 
-        if(e.getSource() == goodbyeBtn){
+        if(e.getSource() == refresh){
             toolBarListener.emitText("Goodbye.");
         }
     }
