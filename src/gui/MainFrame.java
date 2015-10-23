@@ -25,6 +25,8 @@ public class MainFrame extends JFrame{
     private Controller controller;
     private PrefsDialog preference;
     private Preferences prefs;
+    //
+    private JSplitPane splitPane;
 
 
     public MainFrame(){
@@ -37,6 +39,8 @@ public class MainFrame extends JFrame{
         controller = new Controller();
         preference = new PrefsDialog(this);
         toolBar = new ToolBar();
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, tablePanel);
+        splitPane.setOneTouchExpandable(true);
 
 
         fileChooser = new JFileChooser();
@@ -44,11 +48,13 @@ public class MainFrame extends JFrame{
 
         setJMenuBar(createMenuBar());
 
-        add(formPanel, BorderLayout.WEST);
+        //add(formPanel, BorderLayout.WEST);
+        //add(tablePanel, BorderLayout.CENTER);
+
         add(toolBar, BorderLayout.PAGE_START);
+        add(splitPane, BorderLayout.CENTER);
 
       //  add(textPanel, BorderLayout.CENTER);
-        add(tablePanel, BorderLayout.CENTER);
 
         toolBar.setToolBarListener(new ToolBarListener() {
             @Override
@@ -194,6 +200,9 @@ public class MainFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) e.getSource();
+                if(menuItem.isSelected()){
+                    splitPane.setDividerLocation((int)formPanel.getMinimumSize().getWidth());
+                }
                 formPanel.setVisible(menuItem.isSelected());
             }
         });
