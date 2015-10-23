@@ -91,6 +91,16 @@ public class Controller {
 
     }
 
+    public void loadFromDB(){
+        try{
+            db.connect();
+            db.loadPeopleFromDB();
+            db.disconnect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void loadFromFile(File file) throws IOException{
         db.loadFromFile(file);
     }

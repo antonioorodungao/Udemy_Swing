@@ -45,9 +45,23 @@ public class MainFrame extends JFrame{
         setJMenuBar(createMenuBar());
 
         add(formPanel, BorderLayout.WEST);
-        add(toolBar, BorderLayout.NORTH);
+        add(toolBar, BorderLayout.PAGE_START);
+
       //  add(textPanel, BorderLayout.CENTER);
         add(tablePanel, BorderLayout.CENTER);
+
+        toolBar.setToolBarListener(new ToolBarListener() {
+            @Override
+            public void refresh() {
+                controller.loadFromDB();
+            }
+
+            @Override
+            public void save() {
+                controller.saveToDB();
+
+            }
+        });
 
         tablePanel.setData(controller.getPeople());
 

@@ -10,22 +10,26 @@ import java.net.URL;
 /**
  * Created by Oro on 8/5/2015.
  */
-public class ToolBar extends JPanel implements ActionListener{
+public class ToolBar extends JToolBar implements ActionListener{
 
     private JButton save;
     private JButton refresh;
     private ToolBarListener toolBarListener;
 
     public ToolBar(){
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        //get rid of the border if you want the toolbar draggable.
+       // setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+        //setFloatable(false);
 
-        save = new JButton("Save...");
+        save = new JButton();
+        save.setToolTipText("Save");
         save.setIcon(createIcon("/images/Save24.gif"));
-        refresh = new JButton("Refresh...");
+        refresh = new JButton();
+        refresh.setToolTipText("Refresh");
         refresh.setIcon(createIcon("/images/Refresh24.gif"));
 
         add(save);
+        addSeparator();
         add(refresh);
 
         save.addActionListener(this);
@@ -49,11 +53,11 @@ public class ToolBar extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == save){
-            toolBarListener.emitText("Hello");
+            toolBarListener.save();
         }
 
         if(e.getSource() == refresh){
-            toolBarListener.emitText("Goodbye.");
+            toolBarListener.refresh();
         }
     }
 }
