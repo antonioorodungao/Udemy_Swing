@@ -31,6 +31,10 @@ public class MessagePanel extends JPanel  implements ProgressDialogListener{
     private MessageServer messageServer;
     private ProgressDialog progressDialog;
     SwingWorker<List<Message>, Integer> worker;
+    private JSplitPane upperPane;
+    private JSplitPane lowerPane;
+    private TextPanel textPanel;
+    private JList messageList;
 
     public MessagePanel(Window parent) {
 
@@ -88,7 +92,21 @@ public class MessagePanel extends JPanel  implements ProgressDialogListener{
 
         setLayout(new BorderLayout());
 
-        add(new JScrollPane(serverTree), BorderLayout.CENTER);
+        textPanel = new TextPanel();
+        messageList = new JList();
+
+        lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, messageList, textPanel);
+        upperPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(serverTree), lowerPane);
+
+
+        //add(new JScrollPane(serverTree), BorderLayout.CENTER);
+        textPanel.setMinimumSize(new Dimension(10,150));
+        messageList.setMinimumSize(new Dimension(10,100));
+
+        //ratio of lowerpane and upperpane
+        lowerPane.setResizeWeight(0.5);
+        upperPane.setResizeWeight(0.5);
+        add(upperPane);
 
     }
 
@@ -151,18 +169,18 @@ public class MessagePanel extends JPanel  implements ProgressDialogListener{
     private DefaultMutableTreeNode createTree() {
         DefaultMutableTreeNode top = new DefaultMutableTreeNode("Servers");
 
-        DefaultMutableTreeNode branch1 = new DefaultMutableTreeNode(new ServerInfo("USA", 0, selectedServers.contains(0)));
-        DefaultMutableTreeNode server1 = new DefaultMutableTreeNode(new ServerInfo("New York", 1,  selectedServers.contains(1)));
-        DefaultMutableTreeNode server2 = new DefaultMutableTreeNode(new ServerInfo("Boston", 2,  selectedServers.contains(2)));
-        DefaultMutableTreeNode server3 = new DefaultMutableTreeNode(new ServerInfo("Los Angeles", 3,  selectedServers.contains(3)));
+        DefaultMutableTreeNode branch1 = new DefaultMutableTreeNode("USA");
+        DefaultMutableTreeNode server1 = new DefaultMutableTreeNode(new ServerInfo("New York", 0,  selectedServers.contains(0)));
+        DefaultMutableTreeNode server2 = new DefaultMutableTreeNode(new ServerInfo("Boston", 1,  selectedServers.contains(1)));
+        DefaultMutableTreeNode server3 = new DefaultMutableTreeNode(new ServerInfo("Los Angeles", 2,  selectedServers.contains(2)));
 
         branch1.add(server1);
         branch1.add(server2);
         branch1.add(server3);
 
-        DefaultMutableTreeNode branch2 = new DefaultMutableTreeNode(new ServerInfo("UK",4,  selectedServers.contains(4)));
-        DefaultMutableTreeNode server4 = new DefaultMutableTreeNode(new ServerInfo("London", 5,  selectedServers.contains(5)));
-        DefaultMutableTreeNode server5 = new DefaultMutableTreeNode(new ServerInfo("Edinburgh", 6,  selectedServers.contains(6)));
+        DefaultMutableTreeNode branch2 = new DefaultMutableTreeNode("UK");
+        DefaultMutableTreeNode server4 = new DefaultMutableTreeNode(new ServerInfo("London", 3,  selectedServers.contains(3)));
+        DefaultMutableTreeNode server5 = new DefaultMutableTreeNode(new ServerInfo("Edinburgh", 6,  selectedServers.contains(4)));
         branch2.add(server4);
         branch2.add(server5);
 
