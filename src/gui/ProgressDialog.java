@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Created by WFA_ORO_BH on 10/24/2015.
@@ -35,6 +37,18 @@ public class ProgressDialog extends JDialog  {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(listener!=null){
+                    listener.cancelProgress();
+                }
+            }
+        });
+
+
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                if(listener != null){
                     listener.cancelProgress();
                 }
             }
