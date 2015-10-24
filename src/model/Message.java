@@ -15,4 +15,6 @@ public class Message {
     public String getTitle(){
         return m1;
     }
+
+    public String getContent(){ return  m2;}
 }
