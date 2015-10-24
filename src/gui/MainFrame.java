@@ -42,7 +42,7 @@ public class MainFrame extends JFrame{
         preference = new PrefsDialog(this);
         toolBar = new ToolBar();
         tabbedPane = new JTabbedPane();
-        messagePanel = new MessagePanel();
+        messagePanel = new MessagePanel(this);
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, formPanel, tabbedPane);
         splitPane.setOneTouchExpandable(true);
 

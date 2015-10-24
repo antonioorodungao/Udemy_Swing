@@ -8,9 +8,57 @@ import java.awt.*;
  */
 public class ProgressDialog extends JDialog {
 
+    private JProgressBar progressbar;
+    private JButton cancelButton;
+
     public ProgressDialog(Window parent){
         super(parent, "Messages Downloading...", ModalityType.APPLICATION_MODAL);
-        setSize(400,400);
 
+        progressbar = new JProgressBar();
+        cancelButton = new JButton("Cancel");
+
+        setLayout(new FlowLayout());
+
+        Dimension dimension = cancelButton.getPreferredSize();
+        dimension.width = 400;
+        progressbar.setPreferredSize(dimension);
+
+        add(progressbar);
+        add(cancelButton);
+
+
+        pack();
+        setLocationRelativeTo(parent);
+    }
+
+    public void setMaximum(int max){
+        progressbar.setMaximum(max);
+    }
+
+    public void setMinimum(int min){
+        progressbar.setMinimum(min);
+    }
+
+    public void setValue(int value){
+        progressbar.setValue(value);
+    }
+
+    @Override
+    public void setVisible(final boolean visible) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if(!visible){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    progressbar.setValue(0);
+                }
+                ProgressDialog.super.setVisible(visible);
+            }
+        });
     }
 }

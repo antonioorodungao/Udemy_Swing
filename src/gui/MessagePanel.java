@@ -31,7 +31,7 @@ public class MessagePanel extends JPanel {
     private MessageServer messageServer;
     private ProgressDialog progressDialog;
 
-    public MessagePanel() {
+    public MessagePanel(Window parent) {
 
         messageServer = new MessageServer();
         selectedServers = new TreeSet<Integer>();
@@ -41,7 +41,7 @@ public class MessagePanel extends JPanel {
         treeCellRenderer = new ServerTreeCellRenderer();
         treeCellEditor = new ServerTreeCellEditor();
         serverTree = new JTree(createTree());
-        progressDialog = new ProgressDialog((Window)getParent());
+        progressDialog = new ProgressDialog(parent);
         serverTree.setCellRenderer(treeCellRenderer);
         serverTree.setCellEditor(treeCellEditor);
         serverTree.setEditable(true);
@@ -94,17 +94,13 @@ public class MessagePanel extends JPanel {
 
     private void retrieveMessages(){
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                progressDialog.setVisible(true);
-            }
-        });
+
         SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>() {
 
             @Override
             protected void process(List<Integer> counts) {
                 int retrieved = counts.get(counts.size()-1);
+                progressDialog.setValue(retrieved + 1);
                 System.out.println("Got " + retrieved + " messages");
 
             }
@@ -125,11 +121,16 @@ public class MessagePanel extends JPanel {
 
             @Override
             protected List<Message> doInBackground() throws Exception {
+
                 List<Message> retrievedMessages = new ArrayList<Message>();
                 int count = 0;
+                progressDialog.setMinimum(0);
+                progressDialog.setMaximum(messageServer.getMessageCount());
+                if(messageServer.getMessageCount() > 0)
+                 progressDialog.setVisible(true);
+
                 for(Message message : messageServer){
                     retrievedMessages.add(message);
-                    count++;
                     publish(count++);
                 }
                 return retrievedMessages;
