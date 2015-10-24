@@ -1,11 +1,11 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 
@@ -13,36 +13,7 @@ import java.awt.*;
  * Created by WFA_ORO_BH on 10/23/2015.
  */
 
-class ServerInfo{
-    private int serverID;
-    private String servername;
-    private boolean isChecked;
 
-    public ServerInfo(String name, int id, boolean isChecked){
-        this.servername = name;
-        this.serverID = id;
-        this.isChecked = isChecked;
-    }
-
-    public String getServername(){
-        return servername;
-    }
-
-    public String toString(){
-        return serverID + ":" + servername;
-    }
-
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean isChecked){
-        this.isChecked = isChecked;
-    }
-
-
-
-}
 public class MessagePanel extends JPanel {
 
     private JTree serverTree;
@@ -62,13 +33,28 @@ public class MessagePanel extends JPanel {
 
         serverTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-        serverTree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
-                ServerInfo userObject = (ServerInfo)node.getUserObject();
+//        serverTree.addTreeSelectionListener(new TreeSelectionListener() {
+//            @Override
+//            public void valueChanged(TreeSelectionEvent e) {
+//                DefaultMutableTreeNode node = (DefaultMutableTreeNode) serverTree.getLastSelectedPathComponent();
+//                ServerInfo userObject = (ServerInfo)node.getUserObject();
+//
+//                System.out.println(userObject);
+//            }
+//        });
 
-                System.out.println(userObject);
+        treeCellEditor.addCellEditorListener(new CellEditorListener() {
+            @Override
+            public void editingStopped(ChangeEvent e) {
+                System.out.println("Hello");
+                ServerInfo info = (ServerInfo) treeCellEditor.getCellEditorValue();
+                System.out.println("info" + info.toString());
+
+            }
+
+            @Override
+            public void editingCanceled(ChangeEvent e) {
+
             }
         });
 
