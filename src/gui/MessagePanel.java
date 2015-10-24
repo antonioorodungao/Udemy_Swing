@@ -29,6 +29,7 @@ public class MessagePanel extends JPanel {
     private ServerTreeCellEditor treeCellEditor;
     private Set<Integer> selectedServers;
     private MessageServer messageServer;
+    private ProgressDialog progressDialog;
 
     public MessagePanel() {
 
@@ -40,6 +41,7 @@ public class MessagePanel extends JPanel {
         treeCellRenderer = new ServerTreeCellRenderer();
         treeCellEditor = new ServerTreeCellEditor();
         serverTree = new JTree(createTree());
+        progressDialog = new ProgressDialog((Window)getParent());
         serverTree.setCellRenderer(treeCellRenderer);
         serverTree.setCellEditor(treeCellEditor);
         serverTree.setEditable(true);
@@ -91,6 +93,13 @@ public class MessagePanel extends JPanel {
     }
 
     private void retrieveMessages(){
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.setVisible(true);
+            }
+        });
         SwingWorker<List<Message>, Integer> worker = new SwingWorker<List<Message>, Integer>() {
 
             @Override
@@ -110,6 +119,8 @@ public class MessagePanel extends JPanel {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
+
+                progressDialog.setVisible(false);
             }
 
             @Override
