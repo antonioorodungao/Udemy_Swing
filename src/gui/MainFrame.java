@@ -7,6 +7,8 @@ import sun.security.krb5.internal.ktab.KeyTabInputStream;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -49,6 +51,17 @@ public class MainFrame extends JFrame{
 
         tabbedPane.addTab("Person Database", tablePanel);
         tabbedPane.addTab("Messages", messagePanel);
+
+        tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                System.out.println(tabbedPane.getSelectedIndex());
+                if(tabbedPane.getSelectedIndex() ==1){
+                    messagePanel.refresh();
+                }
+
+            }
+        });
 
 
         fileChooser = new JFileChooser();
