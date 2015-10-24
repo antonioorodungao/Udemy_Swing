@@ -99,6 +99,7 @@ public class MessagePanel extends JPanel  implements ProgressDialogListener{
         textPanel = new TextPanel();
         messageList = new JList();
         messageList.setModel(messageListModel);
+        messageList.setCellRenderer(new MessageListRenderer());
 
         lowerPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(messageList), textPanel);
         upperPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(serverTree), lowerPane);
@@ -135,7 +136,7 @@ public class MessagePanel extends JPanel  implements ProgressDialogListener{
                     List<Message> retrievedMessage = get();
                     System.out.println("Retrieved " + retrievedMessage.size() + " messages.");
                     for(Message message: retrievedMessage) {
-                        messageListModel.addElement(message.getTitle());
+                        messageListModel.addElement(message);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
