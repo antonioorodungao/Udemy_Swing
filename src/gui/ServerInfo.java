@@ -30,6 +30,7 @@ class ServerInfo{
         this.isChecked = isChecked;
     }
 
-
-
+    public int getServerID() {
+        return serverID;
+    }
 }
