@@ -1,6 +1,8 @@
 package gui;
 
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -30,6 +32,24 @@ public class Utils {
             System.out.println("Unable to load image.");
         }
         return new ImageIcon(url);
+    }
+
+    public static Font createFont(String path){
+        URL url= System.class.getResource(path);
+
+        if(url==null){
+            System.err.println("Unable to load font: " +path);
+        }
+        Font font = null;
+        try {
+            font = Font.createFont(Font.TRUETYPE_FONT, url.openStream());
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return font;
     }
 
 

@@ -19,6 +19,7 @@ public class MessageListRenderer implements ListCellRenderer {
 
         label = new JLabel();
         label.setIcon(Utils.createIcon("/images/Information16.gif"));
+        label.setFont(Utils.createFont("/font/segoeui.ttf").deriveFont(Font.PLAIN, 15));
         panel = new JPanel();
 
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
