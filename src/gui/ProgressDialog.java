@@ -2,14 +2,17 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by WFA_ORO_BH on 10/24/2015.
  */
-public class ProgressDialog extends JDialog {
+public class ProgressDialog extends JDialog  {
 
     private JProgressBar progressbar;
     private JButton cancelButton;
+    private ProgressDialogListener listener;
 
     public ProgressDialog(Window parent){
         super(parent, "Messages Downloading...", ModalityType.APPLICATION_MODAL);
@@ -27,6 +30,15 @@ public class ProgressDialog extends JDialog {
 
         add(progressbar);
         add(cancelButton);
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(listener!=null){
+                    listener.cancelProgress();
+                }
+            }
+        });
 
 
         pack();
@@ -64,5 +76,9 @@ public class ProgressDialog extends JDialog {
                 ProgressDialog.super.setVisible(visible);
             }
         });
+    }
+
+    public void setProgressDialogListener(ProgressDialogListener lsnr){
+        this.listener = lsnr;
     }
 }
