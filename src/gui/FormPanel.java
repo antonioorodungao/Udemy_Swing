@@ -1,5 +1,7 @@
 package gui;
 
+import model.EmploymentCategory;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -38,7 +40,7 @@ public class FormPanel extends JPanel{
         nameField = new JTextField(10);
         occupationField = new JTextField(10);
         ageList = new JList();
-        empCombo = new JComboBox();
+        empCombo = new JComboBox(EmploymentCategory.values());
         empCombo.setEditable(true);
         citizenCheck = new JCheckBox("US Citizen");
         citizenCheck.setSelected(false);
@@ -67,11 +69,6 @@ public class FormPanel extends JPanel{
         ageList.setSelectedIndex(0);
 
         //Setup combo box
-        DefaultComboBoxModel emp_model = new DefaultComboBoxModel();
-        emp_model.addElement("employed");
-        emp_model.addElement("self-employed");
-        emp_model.addElement("unemployed");
-        empCombo.setModel(emp_model);
 
         okBtn = new JButton("OK");
 

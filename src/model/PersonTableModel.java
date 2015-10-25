@@ -77,6 +77,8 @@ public class PersonTableModel extends AbstractTableModel {
         switch(columnIndex){
             case 1:
                 return true;
+            case 4:
+                return true;
             case 5:
                 return true;
             default:
@@ -96,7 +98,7 @@ public class PersonTableModel extends AbstractTableModel {
             case 3:
                 return String.class;
             case 4:
-                return String.class;
+                return EmploymentCategory.class;
             case 5:
                 return Boolean.class;
             case 6:
