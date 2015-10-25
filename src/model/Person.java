@@ -17,6 +17,9 @@ public class Person implements Serializable{
     private String taxID;
     private Gender gender;
 
+    private static final long serialVersionUID = 1L;
+
+
     public Person(String name, String occupation, AgeCategory agecat, EmploymentCategory empcat,
                   boolean usCitizen, String taxID, Gender gender){
         this.name = name;
