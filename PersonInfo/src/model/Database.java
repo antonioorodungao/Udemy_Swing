@@ -47,7 +47,7 @@ public class Database {
         }
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:TWMDB", "udemy", "udemy123");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "udemy", "udemy123");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
