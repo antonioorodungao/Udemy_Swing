@@ -28,8 +28,10 @@ public enum EmploymentCategory {
                 return Selfemployed;
             case 2:
                 return Employed;
+            case 3:
+                return Other;
             default:
-                return Unemployed;
+                return Other;
         }
     }
 }
