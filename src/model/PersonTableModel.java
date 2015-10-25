@@ -65,6 +65,9 @@ public class PersonTableModel extends AbstractTableModel {
             case 1:
                 p.setName((String)aValue);
                 break;
+            case 4:
+                p.setEmpcat((EmploymentCategory) aValue);
+                break;
             case 5:
                 p.setUsCitizen((Boolean)aValue);
                 break;
