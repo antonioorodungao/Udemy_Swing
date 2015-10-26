@@ -12,8 +12,6 @@ public class Main extends JApplet implements ActionListener {
     private Timer timer;
     private Game game;
 
-
-
     @Override
     public void init() {
 
@@ -30,18 +28,15 @@ public class Main extends JApplet implements ActionListener {
 
     @Override
     public void start() {
-        System.out.println("Start is called");
         timer.start();
     }
 
     @Override
     public void destroy() {
-        System.out.println("Destroy is called");
     }
 
     @Override
     public void stop() {
-        System.out.println("Stop is called.");
         timer.stop();
     }
 
