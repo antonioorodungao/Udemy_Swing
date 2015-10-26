@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 /**
  * Created by Oro on 10/25/2015.
  */
-public class Main extends Applet implements ActionListener {
+public class Main extends JApplet implements ActionListener {
 
     private Timer timer;
     private Game game;
@@ -25,7 +25,7 @@ public class Main extends Applet implements ActionListener {
         timer = new Timer(10, this);
 
         setSize(600, 500);
-        add(new Game(), BorderLayout.CENTER);
+        add(game, BorderLayout.CENTER);
     }
 
     @Override
@@ -47,10 +47,6 @@ public class Main extends Applet implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         game.update();
-        game.repaint();
-//        System.out.println("Timer is running");
-
     }
 }
