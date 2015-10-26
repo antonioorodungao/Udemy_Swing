@@ -20,7 +20,7 @@ public class Main extends JApplet implements ActionListener {
         System.out.println("Init is called");
         setLayout(new BorderLayout());
 
-        timer = new Timer(10, this);
+        timer = new Timer(100, this);
 
         setSize(600, 500);
         add(game, BorderLayout.CENTER);

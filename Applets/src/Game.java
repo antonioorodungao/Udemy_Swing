@@ -47,6 +47,9 @@ public class Game extends JComponent {
                 ball.y = e.getY();
             }
         });
+
+        Cursor hiddenCursor = getToolkit().createCustomCursor(new BufferedImage(1,1,BufferedImage.TYPE_INT_ARGB),new Point(1,1), "");
+        setCursor(hiddenCursor);
     }
 
     @Override
