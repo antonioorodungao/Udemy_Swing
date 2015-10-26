@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -15,6 +16,7 @@ public class Game extends JComponent {
     private RoundRectangle2D.Double bat = new RoundRectangle2D.Double(200, 200, 100, 10, 20, 20);
 
     private double speed = 10.0;
+    private double bat_speed = 10.0;
 
     private int xDirectionBall = 1;
     private int yDirectionBall = 1;
@@ -33,7 +35,7 @@ public class Game extends JComponent {
             @Override
             public void mouseMoved(MouseEvent e) {
 
-                System.out.println(String.format("%s %s", e.getX(), e.getY()));
+                //System.out.println(String.format("%s %s", e.getX(), e.getY()));
                 bat.x = e.getX() - bat.getWidth() / 2;
                 bat.y = e.getY() - bat.getHeight() / 2;
 
@@ -50,6 +52,29 @@ public class Game extends JComponent {
 
         Cursor hiddenCursor = getToolkit().createCustomCursor(new BufferedImage(1,1,BufferedImage.TYPE_INT_ARGB),new Point(1,1), "");
         setCursor(hiddenCursor);
+
+        //setFocusable(true);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                int key=e.getKeyCode();
+                switch (key){
+                    case KeyEvent.VK_UP:
+                        bat.y -= bat_speed;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        bat.y += bat_speed;
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        bat.x -= bat_speed;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        bat.x += bat_speed;
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
